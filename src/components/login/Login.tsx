@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { notEmpty } from "../../utils/validations";
+import { validateUsuario, validateContraseña } from "../../utils/validations";
 import { Auth } from "../../types/types";
 import Input from "../../elements/Input";
 import { useInput } from "../../hooks/hooks";
@@ -10,34 +10,20 @@ function Login() {
 	const userInput = useInput();
 	const passwordInput = useInput();
 
-	const validate = () => {
-		let flags = 0;
-		if (!notEmpty(userInput.ref!.current!.value)) {
-			userInput.setError("El usuario no puede estar vacio");
-			flags++;
-		} else {
-			userInput.setError("");
-		}
-		if (!notEmpty(passwordInput.ref!.current!.value)) {
-			passwordInput.setError("La contraseña no puede estar vacia");
-			flags++;
-		} else {
-			passwordInput.setError("");
-		}
-		if (flags === 0) {
-			console.log("validado");
-			const auth: Auth = {
-				username: userInput.ref!.current!.value,
-				password: passwordInput.ref!.current!.value,
-			};
-			console.log(auth);
-			userInput.ref!.current!.value = "";
-			passwordInput.ref!.current!.value = "";
-		}
-	};
 	const handleClick = () => {
-		validate();
-		console.log("click");
+		let flags = 0;
+		flags += validateUsuario(userInput);
+		flags += validateContraseña(passwordInput);
+		if (flags === 0) {
+			const auth: Auth = {
+				username: userInput.ref.current?.value!,
+				password: passwordInput.ref.current?.value!,
+			};
+			userInput.ref.current!.value = "";
+			passwordInput.ref.current!.value = "";
+			console.log("inicio sesion");
+			console.log(auth);
+		}
 	};
 	const handleRegister = () => {
 		navigate("/register");

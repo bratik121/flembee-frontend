@@ -2,6 +2,14 @@ import Input from "../../elements/Input";
 import { useInput } from "../../hooks/hooks";
 import { useNavigate } from "react-router-dom";
 import Button from "../../elements/Button";
+import { User } from "../../types/types";
+import {
+	validateText,
+	validateUsuario,
+	validateContraseña,
+	validateEmail,
+} from "../../utils/validations";
+
 function Register() {
 	const navigate = useNavigate();
 	const userInput = useInput();
@@ -14,7 +22,31 @@ function Register() {
 		navigate("/");
 	};
 
-	const handleClick = () => {};
+	const handleClick = () => {
+		let flags = 0;
+		flags += validateText(firstNameInput);
+		flags += validateText(lastNameInput);
+		flags += validateUsuario(userInput);
+		flags += validateContraseña(passwordInput);
+		flags += validateEmail(emailInput);
+		if (flags === 0) {
+			const user: User = {
+				firstName: firstNameInput.ref.current?.value!,
+				lastName: lastNameInput.ref.current?.value!,
+				username: userInput.ref.current?.value!,
+				password: passwordInput.ref.current?.value!,
+				email: emailInput.ref.current?.value!,
+				token: "token",
+			};
+			firstNameInput.ref.current!.value = "";
+			lastNameInput.ref.current!.value = "";
+			userInput.ref.current!.value = "";
+			passwordInput.ref.current!.value = "";
+			emailInput.ref.current!.value = "";
+			console.log("registro");
+			console.log(user);
+		}
+	};
 
 	return (
 		<div className="modal w-screen h-screen bg-[rgba(0,0,0,0.3)] grid items-center justify-items-center absolute top-0 right-0">

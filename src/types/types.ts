@@ -1,8 +1,8 @@
 type User = {
-	name: string;
-	lastname: string;
+	firstName: string;
+	lastName: string;
 	email: string;
-	user: string;
+	username: string;
 	password: string;
 	token: string;
 };
@@ -17,6 +17,7 @@ type Task = {
 	description: string;
 	date: string;
 	status: string;
+	userId: number;
 };
 
 export type { User, Auth, Task };

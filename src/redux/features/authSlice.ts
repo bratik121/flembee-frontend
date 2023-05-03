@@ -4,19 +4,28 @@ import { User } from "../../types/types";
 const authSlice = createSlice({
 	name: "auth",
 	initialState: {
-		user: "",
+		username: "",
+		firstName: "",
+		lastName: "",
+		email: "",
 		token: "",
 		loged: false,
 	},
 	reducers: {
 		setToken: (state, action: PayloadAction<User>) => {
-			state.user = action.payload.user;
+			state.username = action.payload.username;
 			state.token = action.payload.token;
+			state.firstName = action.payload.firstName;
+			state.lastName = action.payload.lastName;
+			state.email = action.payload.email;
 			state.loged = true;
 		},
 		removeToken: (state) => {
-			state.user = "";
+			state.username = "";
 			state.token = "";
+			state.firstName = "";
+			state.lastName = "";
+			state.email = "";
 			state.loged = false;
 		},
 	},
