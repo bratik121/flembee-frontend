@@ -32,7 +32,7 @@ function Register() {
 		registerLoading.setLoading(true);
 		const respuesta: any = await register(user);
 		const { data, code, message } = respuesta.data;
-		if (code === 200) {
+		if (code === 201) {
 			console.log(data);
 			registerPopUp.execute();
 			navigate("/");

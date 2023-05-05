@@ -12,7 +12,6 @@ import "./App.css";
 
 function App() {
 	const { open, message } = useSelector((state: RootState) => state.popUp);
-	console.log(open, message);
 	return (
 		<div className="relative">
 			<Header />
