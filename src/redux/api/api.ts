@@ -33,4 +33,4 @@ export const apiSlice = createApi({
 	}),
 });
 
-export const { useLoginMutation } = apiSlice;
+export const { useLoginMutation, useRegisterMutation } = apiSlice;

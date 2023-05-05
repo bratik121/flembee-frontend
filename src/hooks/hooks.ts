@@ -6,10 +6,14 @@ import { PopUp } from "../types/types";
 export const useInput = () => {
 	const ref = useRef<HTMLInputElement>(null);
 	const [error, setError] = useState("");
+	const truncate = () => {
+		ref.current!.value = "";
+	};
 	return {
 		ref,
 		error,
 		setError,
+		truncate,
 	};
 };
 
