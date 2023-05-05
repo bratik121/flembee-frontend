@@ -4,7 +4,7 @@ import { useState } from "react";
 import Input from "../../elements/Input";
 import Button from "../../elements/Button";
 import Spinner from "../../elements/Spinner";
-import { User } from "../../types/types";
+import { Register as RegisterType } from "../../types/types";
 import {
 	validateText,
 	validateUsuario,
@@ -33,7 +33,7 @@ function Register() {
 		flags += validateContraseña(passwordInput);
 		flags += validateEmail(emailInput);
 		if (flags === 0) {
-			const user: User = {
+			const user: RegisterType = {
 				firstName: firstNameInput.ref.current?.value!,
 				lastName: lastNameInput.ref.current?.value!,
 				username: userInput.ref.current?.value!,

@@ -13,13 +13,14 @@ import "./App.css";
 function App() {
 	const { open, message } = useSelector((state: RootState) => state.popUp);
 	return (
-		<div>
+		<div className="relative">
 			<Header />
 			<AnimatePresence>{open && <PopUp message={message} />}</AnimatePresence>
 			<Routes>
 				<Route path="/" element={<Login />} />
 				<Route path="/register" element={<Register />} />
 				<Route path="/tasks" element={<Tasks />} />
+				<Route path="/tasks/new" element={<TaskPage />} />
 				<Route path="/tasks/:taskId" element={<TaskPage />} />
 			</Routes>
 		</div>

@@ -4,6 +4,7 @@ import { User } from "../../types/types";
 const authSlice = createSlice({
 	name: "auth",
 	initialState: {
+		id: null as number | null,
 		username: "",
 		firstName: "",
 		lastName: "",
@@ -13,6 +14,7 @@ const authSlice = createSlice({
 	},
 	reducers: {
 		setToken: (state, action: PayloadAction<User>) => {
+			state.id = action.payload.id;
 			state.username = action.payload.username;
 			state.token = action.payload.token;
 			state.firstName = action.payload.firstName;
@@ -21,6 +23,7 @@ const authSlice = createSlice({
 			state.loged = true;
 		},
 		removeToken: (state) => {
+			state.id = null;
 			state.username = "";
 			state.token = "";
 			state.firstName = "";

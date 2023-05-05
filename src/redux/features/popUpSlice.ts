@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { popUpType } from "../../types/types";
+import { PopUp } from "../../types/types";
 
 const popUpSlice = createSlice({
 	name: "opUp",
@@ -8,7 +8,7 @@ const popUpSlice = createSlice({
 		message: "",
 	},
 	reducers: {
-		setOpen: (state, action: PayloadAction<popUpType>) => {
+		setOpen: (state, action: PayloadAction<PopUp>) => {
 			state.open = action.payload.open;
 			state.message = action.payload.message;
 		},
