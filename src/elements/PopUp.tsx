@@ -1,10 +1,11 @@
 import { AiFillCheckCircle } from "react-icons/ai";
 import { motion as m } from "framer-motion";
+import "./elements.css";
 
 function PopUp({ message }: { message: string }) {
 	return (
 		<m.div
-			className="popUp flex items-center fixed px-6 py-2 bg-blanco gap-4 rounded-xl"
+			className="popUp flex items-center fixed px-6 py-2 bg-blanco gap-4 rounded-xl z-50 bg-white "
 			initial={{ opacity: 0, y: -100 }}
 			animate={{ opacity: 1, y: 0 }}
 			exit={{ opacity: 0, y: -80 }}

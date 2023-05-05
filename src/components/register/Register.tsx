@@ -4,6 +4,7 @@ import Input from "../../elements/Input";
 import Button from "../../elements/Button";
 import Spinner from "../../elements/Spinner";
 import { Register as RegisterType } from "../../types/types";
+import { useRegisterMutation } from "../../redux/api/api";
 import {
 	validateText,
 	validateUsuario,
@@ -19,9 +20,27 @@ function Register() {
 	const firstNameInput = useInput();
 	const lastNameInput = useInput();
 	const registerLoading = useLoading();
+	const registerPopUp = usePopUp("Usuario registrado con exito!");
 
 	const handleLogin = () => {
 		navigate("/");
+	};
+
+	const [register] = useRegisterMutation();
+
+	const handleRegister = async (user: RegisterType) => {
+		registerLoading.setLoading(true);
+		const respuesta: any = await register(user);
+		const { data, code, message } = respuesta.data;
+		if (code === 200) {
+			console.log(data);
+			registerPopUp.execute();
+			navigate("/");
+		} else {
+			console.log(message);
+			registerLoading.setMessage(message);
+		}
+		registerLoading.setLoading(false);
 	};
 
 	const handleClick = () => {
@@ -38,16 +57,13 @@ function Register() {
 				username: userInput.ref.current?.value!,
 				password: passwordInput.ref.current?.value!,
 				email: emailInput.ref.current?.value!,
-				token: "token",
 			};
 			firstNameInput.truncate();
 			lastNameInput.truncate();
 			userInput.truncate();
 			passwordInput.truncate();
 			emailInput.truncate();
-
-			console.log("registro");
-			console.log(user);
+			handleRegister(user);
 		}
 	};
 

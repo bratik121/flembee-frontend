@@ -35,6 +35,7 @@ export const usePopUp = (message: string) => {
 		message: message,
 	};
 	const execute = () => {
+		console.log("usePopUp");
 		dispatch(setOpen(popUp));
 		setTimeout(() => {
 			dispatch(setClose());

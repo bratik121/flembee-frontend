@@ -16,8 +16,6 @@ function Login() {
 
 	const login = async (auth: Auth) => {
 		loginLoading.setLoading(true);
-		userInput.truncate();
-		passwordInput.truncate();
 		const respuesta: any = await userLogin(auth);
 		const { data, code, message } = respuesta.data;
 		if (code === 200) {
@@ -38,6 +36,8 @@ function Login() {
 				username: userInput.ref.current?.value!,
 				password: passwordInput.ref.current?.value!,
 			};
+			userInput.truncate();
+			passwordInput.truncate();
 			login(auth);
 		}
 	};

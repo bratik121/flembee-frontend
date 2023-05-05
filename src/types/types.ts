@@ -14,7 +14,6 @@ type Register = {
 	email: string;
 	username: string;
 	password: string;
-	token: string;
 };
 
 type Auth = {

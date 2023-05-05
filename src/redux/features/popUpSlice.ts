@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PopUp } from "../../types/types";
 
 const popUpSlice = createSlice({
-	name: "opUp",
+	name: "popUp",
 	initialState: {
 		open: false,
 		message: "",
