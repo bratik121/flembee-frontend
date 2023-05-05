@@ -1,4 +1,7 @@
 import { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setOpen, setClose } from "../redux/features/popUpSlice";
+import { popUpType } from "../types/types";
 
 export const useInput = () => {
 	const ref = useRef<HTMLInputElement>(null);
@@ -18,5 +21,22 @@ export const useLoading = () => {
 		setLoading,
 		message,
 		setMessage,
+	};
+};
+
+export const usePopUp = (message: string) => {
+	const dispatch = useDispatch();
+	const popUp: popUpType = {
+		open: true,
+		message: message,
+	};
+	const execute = () => {
+		dispatch(setOpen(popUp));
+		setTimeout(() => {
+			dispatch(setClose());
+		}, 2000);
+	};
+	return {
+		execute,
 	};
 };

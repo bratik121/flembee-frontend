@@ -20,4 +20,9 @@ type Task = {
 	userId: number;
 };
 
-export type { User, Auth, Task };
+type popUpType = {
+	open: boolean;
+	message: string;
+};
+
+export type { User, Auth, Task, popUpType };
