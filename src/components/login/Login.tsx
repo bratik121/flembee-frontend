@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { BiUserCircle } from "react-icons/bi";
+import { useDispatch } from "react-redux";
 import { useLoginMutation } from "../../redux/api/api";
 import { validateUsuario, validateContraseña } from "../../utils/validations";
-import { Auth } from "../../types/types";
+import { Auth, User } from "../../types/types";
 import { useInput, useLoading } from "../../hooks/hooks";
+import { setToken } from "../../redux/features/authSlice";
 import Input from "../../elements/Input";
 import Button from "../../elements/Button";
 import Spinner from "../../elements/Spinner";
@@ -13,13 +15,22 @@ function Login() {
 	const userInput = useInput();
 	const passwordInput = useInput();
 	const loginLoading = useLoading();
+	const dispatch = useDispatch();
 
 	const login = async (auth: Auth) => {
 		loginLoading.setLoading(true);
 		const respuesta: any = await userLogin(auth);
 		const { data, code, message } = respuesta.data;
 		if (code === 200) {
-			console.log(data);
+			const user: User = {
+				id: data.rest.id,
+				firstName: data.rest.firstName,
+				lastName: data.rest.lastName,
+				username: data.rest.username,
+				email: data.rest.email,
+				token: data.token,
+			};
+			dispatch(setToken(user));
 			navigate("/tasks");
 		} else {
 			loginLoading.setMessage(message);
