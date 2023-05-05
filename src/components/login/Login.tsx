@@ -9,25 +9,23 @@ import Button from "../../elements/Button";
 import Spinner from "../../elements/Spinner";
 function Login() {
 	const navigate = useNavigate();
+	const [userLogin] = useLoginMutation();
 	const userInput = useInput();
 	const passwordInput = useInput();
 	const loginLoading = useLoading();
-	const [userLogin] = useLoginMutation();
 
 	const login = async (auth: Auth) => {
 		loginLoading.setLoading(true);
+		userInput.truncate();
+		passwordInput.truncate();
 		const respuesta: any = await userLogin(auth);
-		const { data, code, message } = respuesta;
+		const { data, code, message } = respuesta.data;
 		if (code === 200) {
 			console.log(data);
 			navigate("/tasks");
-			console.log("inicio sesion");
 		} else {
 			loginLoading.setMessage(message);
-			console.log(userInput.ref.current?.value!);
-			console.log(passwordInput.ref.current?.value!);
 		}
-		console.log(data);
 		loginLoading.setLoading(false);
 	};
 
@@ -40,8 +38,6 @@ function Login() {
 				username: userInput.ref.current?.value!,
 				password: passwordInput.ref.current?.value!,
 			};
-			userInput.truncate();
-			passwordInput.truncate();
 			login(auth);
 		}
 	};
@@ -77,6 +73,7 @@ function Login() {
 								password={true}
 							/>
 						</div>
+						<span className="text-red-400">{loginLoading.message}</span>
 						<div className="flex flex-col gap-2 items-center">
 							<Button label="Iniciar sesion" onClick={handleClick} />
 							<span

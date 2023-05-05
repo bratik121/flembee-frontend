@@ -1,6 +1,5 @@
-import { useInput } from "../../hooks/hooks";
+import { useInput, useLoading, usePopUp } from "../../hooks/hooks";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import Input from "../../elements/Input";
 import Button from "../../elements/Button";
 import Spinner from "../../elements/Spinner";
@@ -19,7 +18,7 @@ function Register() {
 	const emailInput = useInput();
 	const firstNameInput = useInput();
 	const lastNameInput = useInput();
-	const [loading, setLoading] = useState(false);
+	const registerLoading = useLoading();
 
 	const handleLogin = () => {
 		navigate("/");
@@ -41,11 +40,12 @@ function Register() {
 				email: emailInput.ref.current?.value!,
 				token: "token",
 			};
-			firstNameInput.ref.current!.value = "";
-			lastNameInput.ref.current!.value = "";
-			userInput.ref.current!.value = "";
-			passwordInput.ref.current!.value = "";
-			emailInput.ref.current!.value = "";
+			firstNameInput.truncate();
+			lastNameInput.truncate();
+			userInput.truncate();
+			passwordInput.truncate();
+			emailInput.truncate();
+
 			console.log("registro");
 			console.log(user);
 		}
@@ -54,7 +54,7 @@ function Register() {
 	return (
 		<div className="modal w-screen h-screen bg-[rgba(0,0,0,0.3)] grid items-center justify-items-center absolute top-0 right-0">
 			<div className="login w-[300px]  md:w-[800px] bg-white shadow-2xl flex flex-col px-8 md:px-20 gap-6 py-10 rounded-lg">
-				{loading ? (
+				{registerLoading.loading ? (
 					<Spinner />
 				) : (
 					<>
