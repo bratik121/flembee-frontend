@@ -1,6 +1,6 @@
 import { Task as TaskType } from "../../types/types";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/app/store";
 import { useNavigate } from "react-router-dom";
 import { useGetTasksQuery } from "../../redux/api/api";
@@ -11,6 +11,7 @@ import Button from "../../elements/Button";
 function Tasks() {
 	const [tasksList, setTasksList] = useState<TaskType[]>([]);
 	const user = useSelector((state: RootState) => state.auth);
+	const dispatch = useDispatch();
 	const { tasks } = useSelector((state: RootState) => state.tasks);
 	const { data, isError, error, isLoading } = useGetTasksQuery(
 		user.id as number
@@ -23,7 +24,7 @@ function Tasks() {
 				console.log(error);
 			} else {
 				setTasksList(data);
-				setTasks(tasksList);
+				dispatch(setTasks(data));
 			}
 		}
 	}, [isLoading]);

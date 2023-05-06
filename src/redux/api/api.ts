@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../app/store";
-import { Auth, Register, NewTask } from "../../types/types";
+import { Auth, Register, NewTask, UpdateTask } from "../../types/types";
 
 export const apiSlice = createApi({
 	reducerPath: "api",
@@ -45,6 +45,18 @@ export const apiSlice = createApi({
 			}),
 			invalidatesTags: ["Api"],
 		}),
+		updateTask: builder.mutation({
+			query: (task: UpdateTask): any => ({
+				url: `tasks/update/${task.id}`,
+				method: "PATCH",
+				body: {
+					title: task.title,
+					description: task.description,
+					userId: task.userId,
+				},
+			}),
+			invalidatesTags: ["Api"],
+		}),
 	}),
 });
 
@@ -53,4 +65,5 @@ export const {
 	useRegisterMutation,
 	useGetTasksQuery,
 	useAddTaskMutation,
+	useUpdateTaskMutation,
 } = apiSlice;
