@@ -4,6 +4,7 @@ import { Auth, Register, NewTask, UpdateTask } from "../../types/types";
 
 export const apiSlice = createApi({
 	reducerPath: "api",
+	tagTypes: ["Api"],
 	baseQuery: fetchBaseQuery({
 		baseUrl: "http://localhost:3000",
 		prepareHeaders: (headers, { getState }) => {
@@ -14,7 +15,6 @@ export const apiSlice = createApi({
 			return headers;
 		},
 	}),
-	tagTypes: ["Api"],
 	endpoints: (builder) => ({
 		login: builder.mutation({
 			query: (login: Auth): any => ({

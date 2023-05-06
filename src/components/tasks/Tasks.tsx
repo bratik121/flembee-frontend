@@ -48,11 +48,7 @@ function Tasks() {
 						{tasksList
 							.filter((task) => task.status === "PENDING")
 							.map((task) => (
-								<Task
-									key={task.id}
-									task={task}
-									setLoading={tasksLoading.setLoading}
-								/>
+								<Task key={task.id} task={task} />
 							))}
 					</>
 				)}
@@ -62,11 +58,7 @@ function Tasks() {
 				{tasksList
 					.filter((task) => task.status === "DONE")
 					.map((task) => (
-						<Task
-							key={task.id}
-							task={task}
-							setLoading={tasksLoading.setLoading}
-						/>
+						<Task key={task.id} task={task} />
 					))}
 			</ul>
 		</div>
