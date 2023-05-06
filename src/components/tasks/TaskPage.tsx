@@ -60,13 +60,14 @@ function TaskPage() {
 	const updateTaskF = async (task: UpdateTask) => {
 		taskPageLoading.setLoading(true);
 		const result: any = await updateTask(task);
-		console.log(result);
+
 		const { code, message } = result.data;
 		if (code === 200) {
 			taskPagePopUp.execute();
 			navigate("/tasks");
 		}
 		taskPageLoading.setMessage(message);
+
 		taskPageLoading.setLoading(false);
 	};
 	const handleUpdateTask = () => {

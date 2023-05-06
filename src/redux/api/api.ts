@@ -57,6 +57,20 @@ export const apiSlice = createApi({
 			}),
 			invalidatesTags: ["Api"],
 		}),
+		deleteTask: builder.mutation({
+			query: (id: number): any => ({
+				url: `tasks/${id}`,
+				method: "DELETE",
+			}),
+			invalidatesTags: ["Api"],
+		}),
+		completeTask: builder.mutation({
+			query: (id: number): any => ({
+				url: `tasks/complete/${id}`,
+				method: "PATCH",
+			}),
+			invalidatesTags: ["Api"],
+		}),
 	}),
 });
 
@@ -66,4 +80,6 @@ export const {
 	useGetTasksQuery,
 	useAddTaskMutation,
 	useUpdateTaskMutation,
+	useDeleteTaskMutation,
+	useCompleteTaskMutation,
 } = apiSlice;
