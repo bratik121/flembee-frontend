@@ -1,7 +1,9 @@
 import { Task as TaskType } from "../../types/types";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/app/store";
 import { useNavigate } from "react-router-dom";
+import { useGetTasksQuery } from "../../redux/api/api";
 import Task from "./Task";
 import Button from "../../elements/Button";
 
@@ -17,7 +19,19 @@ const tasks: TaskType[] = [
 ];
 function Tasks() {
 	const user = useSelector((state: RootState) => state.auth);
+	const { data, isError, error, isLoading } = useGetTasksQuery(1);
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (!isLoading) {
+			if (isError) {
+				console.log(error);
+			} else {
+				console.log(data);
+			}
+		}
+	}, [isLoading]);
+
 	const handleClick = () => {
 		navigate("/tasks/new");
 	};

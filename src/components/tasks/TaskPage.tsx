@@ -1,64 +1,105 @@
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect, RefObject } from "react";
+import { useInput, usePopUp, useLoading } from "../../hooks/hooks";
+import { validateText, validateEmpty } from "../../utils/validations";
+import { NewTask } from "../../types/types";
+import { useSelector } from "react-redux";
+import { useAddTaskMutation } from "../../redux/api/api";
+import { RootState } from "../../redux/app/store";
+import Spinner from "../../elements/Spinner";
 import Button from "../../elements/Button";
 function TaskPage() {
 	const { taskId } = useParams();
-	const [newTask, setNewTask] = useState({
-		title: "",
-		description: "",
-	});
+	const titleInput = useInput();
+	const userId = useSelector((state: RootState) => state.auth.id);
+	const descriptionInput = useInput();
+	const taskPageLoading = useLoading();
+	const [addNewTask] = useAddTaskMutation();
+	const taskPagePopUp = usePopUp(
+		`${taskId ? "Tarea modificada con extio" : "Tarea agregada con exito"}`
+	);
 
 	useEffect(() => {
 		if (taskId) {
 			console.log(taskId);
 		}
 	}, []);
-	const handleChange = (
-		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-	) => {
-		setNewTask({ ...newTask, [e.target.name]: e.target.value });
+
+	const addTask = async (task: NewTask) => {
+		taskPageLoading.setLoading(true);
+		const result: any = await addNewTask(task);
+		const { code, message } = result.data;
+		if (code === 201) {
+			taskPagePopUp.execute();
+		} else {
+			taskPageLoading.setMessage(message);
+		}
+
+		taskPageLoading.setLoading(false);
 	};
+
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		console.log(newTask);
+		let flags = 0;
+		flags += validateText(titleInput);
+		flags += validateEmpty(descriptionInput);
+		if (flags === 0) {
+			const newTask: NewTask = {
+				title: titleInput.ref.current?.value!,
+				description: descriptionInput.ref.current?.value!,
+				userId: userId as number,
+			};
+			titleInput.truncate();
+			descriptionInput.truncate();
+			addTask(newTask);
+		}
 	};
 
 	return (
 		<div className="w-full flex flex-col items-center gap-2 pt-12">
+			{" "}
 			<h2 className="">Añadiendo una nueva tarea</h2>
 			<form
-				className="w-[80%] flex flex-col border border-gray-700 rounded-lg p-5 gap-5"
+				className="w-[80%] flex flex-col border border-gray-700 rounded-lg px-10 py-5 gap-5 items-center"
 				onSubmit={(e) => {
 					handleSubmit(e);
 				}}
 			>
-				<input
-					className="border border-gray-500 rounded-md p-2"
-					name="title"
-					type="text"
-					placeholder="tittle"
-					onChange={(e) => {
-						handleChange(e);
-					}}
-					value={newTask.title}
-				/>
-				<textarea
-					className="border border-gray-500 rounded-md p-2 min-h-[50px]"
-					name="description"
-					id=""
-					placeholder="description"
-					onChange={(e) => {
-						handleChange(e);
-					}}
-					value={newTask.description}
-				></textarea>
-				<Button
-					label="Añadir tarea"
-					submit={true}
-					onClick={() => {
-						handleSubmit;
-					}}
-				/>
+				{taskPageLoading.loading ? (
+					<Spinner />
+				) : (
+					<>
+						{" "}
+						<input
+							className="border border-gray-500 rounded-md p-2 w-full"
+							ref={titleInput.ref as RefObject<HTMLInputElement>}
+							name="titulo"
+							type="text"
+							placeholder="Titulo"
+						/>
+						<span className="text-red-400 self-start pl-2">
+							{titleInput.error}
+						</span>
+						<textarea
+							className="border border-gray-500 rounded-md p-2 min-h-[50px] w-full"
+							name="descripcion"
+							ref={descriptionInput.ref as RefObject<HTMLTextAreaElement>}
+							id=""
+							placeholder="Descripcion"
+						></textarea>
+						<span className="text-red-400 self-start pl-2">
+							{descriptionInput.error}
+						</span>
+						<span className="text-red-400">{taskPageLoading.message}</span>
+						<Button
+							label="Añadir tarea"
+							submit={true}
+							onClick={() => {
+								handleSubmit;
+							}}
+						/>
+					</>
+				)}
 			</form>
 		</div>
 	);

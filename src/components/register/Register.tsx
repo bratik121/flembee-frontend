@@ -1,5 +1,6 @@
 import { useInput, useLoading, usePopUp } from "../../hooks/hooks";
 import { useNavigate } from "react-router-dom";
+import { RefObject } from "react";
 import Input from "../../elements/Input";
 import Button from "../../elements/Button";
 import Spinner from "../../elements/Spinner";
@@ -85,7 +86,7 @@ function Register() {
 									label="Usuario"
 									name="usuario"
 									error={userInput.error}
-									usernameRef={userInput.ref}
+									usernameRef={userInput.ref as RefObject<HTMLInputElement>}
 								/>
 							</div>
 							{/* Contrasena */}
@@ -94,7 +95,7 @@ function Register() {
 									label="Contraseña"
 									name="password"
 									error={passwordInput.error}
-									usernameRef={passwordInput.ref}
+									usernameRef={passwordInput.ref as RefObject<HTMLInputElement>}
 									password={true}
 								/>
 							</div>
@@ -104,7 +105,9 @@ function Register() {
 									label="Nombre"
 									name="nombre"
 									error={firstNameInput.error}
-									usernameRef={firstNameInput.ref}
+									usernameRef={
+										firstNameInput.ref as RefObject<HTMLInputElement>
+									}
 								/>
 							</div>
 							{/* Apellido */}
@@ -113,7 +116,7 @@ function Register() {
 									label="Apellido"
 									name="apellido"
 									error={lastNameInput.error}
-									usernameRef={lastNameInput.ref}
+									usernameRef={lastNameInput.ref as RefObject<HTMLInputElement>}
 								/>
 							</div>
 							{/* Email */}
@@ -122,7 +125,7 @@ function Register() {
 									label="Email"
 									name="email"
 									error={emailInput.error}
-									usernameRef={emailInput.ref}
+									usernameRef={emailInput.ref as RefObject<HTMLInputElement>}
 								/>
 							</div>
 						</div>

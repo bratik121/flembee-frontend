@@ -55,3 +55,13 @@ export const validateEmail = (email: any): number => {
 		return 1;
 	}
 };
+
+export const validateEmpty = (text: any): number => {
+	if (notEmpty(text.ref.current.value)) {
+		text.setError("");
+		return 0;
+	} else {
+		text.setError(`Introduzca un ${text.ref.current.name}!`);
+		return 1;
+	}
+};

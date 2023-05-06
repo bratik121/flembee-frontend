@@ -6,6 +6,7 @@ import { validateUsuario, validateContraseña } from "../../utils/validations";
 import { Auth, User } from "../../types/types";
 import { useInput, useLoading } from "../../hooks/hooks";
 import { setToken } from "../../redux/features/authSlice";
+import { RefObject } from "react";
 import Input from "../../elements/Input";
 import Button from "../../elements/Button";
 import Spinner from "../../elements/Spinner";
@@ -72,7 +73,7 @@ function Login() {
 								label="Usuario"
 								name="usuario"
 								error={userInput.error}
-								usernameRef={userInput.ref}
+								usernameRef={userInput.ref as RefObject<HTMLInputElement>}
 							/>
 						</div>
 						<div className="flex flex-col gap-2">
@@ -80,7 +81,7 @@ function Login() {
 								label="Contraseña"
 								name="password"
 								error={passwordInput.error}
-								usernameRef={passwordInput.ref}
+								usernameRef={passwordInput.ref as RefObject<HTMLInputElement>}
 								password={true}
 							/>
 						</div>

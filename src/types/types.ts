@@ -29,9 +29,15 @@ type Task = {
 	userId: number;
 };
 
+type NewTask = {
+	title: string;
+	description: string;
+	userId: number;
+};
+
 type PopUp = {
 	open: boolean;
 	message: string;
 };
 
-export type { User, Auth, Task, PopUp, Register };
+export type { User, Auth, Task, PopUp, Register, NewTask };

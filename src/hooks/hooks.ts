@@ -4,7 +4,7 @@ import { setOpen, setClose } from "../redux/features/popUpSlice";
 import { PopUp } from "../types/types";
 
 export const useInput = () => {
-	const ref = useRef<HTMLInputElement>(null);
+	const ref = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 	const [error, setError] = useState("");
 	const truncate = () => {
 		ref.current!.value = "";
@@ -35,7 +35,6 @@ export const usePopUp = (message: string) => {
 		message: message,
 	};
 	const execute = () => {
-		console.log("usePopUp");
 		dispatch(setOpen(popUp));
 		setTimeout(() => {
 			dispatch(setClose());

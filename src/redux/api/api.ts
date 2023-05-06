@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../app/store";
-import { Auth, Register } from "../../types/types";
+import { Auth, Register, NewTask } from "../../types/types";
 
 export const apiSlice = createApi({
 	reducerPath: "api",
@@ -30,7 +30,25 @@ export const apiSlice = createApi({
 				body: register,
 			}),
 		}),
+		getTasks: builder.query({
+			query: (userId: number): any => ({
+				url: `tasks/${userId}`,
+				method: "GET",
+			}),
+		}),
+		addTask: builder.mutation({
+			query: (newTask: NewTask): any => ({
+				url: `tasks`,
+				method: "POST",
+				body: newTask,
+			}),
+		}),
 	}),
 });
 
-export const { useLoginMutation, useRegisterMutation } = apiSlice;
+export const {
+	useLoginMutation,
+	useRegisterMutation,
+	useGetTasksQuery,
+	useAddTaskMutation,
+} = apiSlice;
