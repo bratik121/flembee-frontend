@@ -35,6 +35,7 @@ export const apiSlice = createApi({
 				url: `tasks/${userId}`,
 				method: "GET",
 			}),
+			providesTags: ["Api"],
 		}),
 		addTask: builder.mutation({
 			query: (newTask: NewTask): any => ({
@@ -42,6 +43,7 @@ export const apiSlice = createApi({
 				method: "POST",
 				body: newTask,
 			}),
+			invalidatesTags: ["Api"],
 		}),
 	}),
 });
